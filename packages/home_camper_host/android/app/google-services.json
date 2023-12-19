@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "420481114516",
+    "project_id": "homecamper-apps",
+    "storage_bucket": "homecamper-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420481114516:android:b9d98aa6516c7320abef81",
+        "android_client_info": {
+          "package_name": "com.homecamper.host"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGhWSMNZm-8zdBVwyHKSoS6yT3EgdSfX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420481114516:android:0580976cd177ad4cabef81",
+        "android_client_info": {
+          "package_name": "com.homecamper.traveler"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGhWSMNZm-8zdBVwyHKSoS6yT3EgdSfX8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

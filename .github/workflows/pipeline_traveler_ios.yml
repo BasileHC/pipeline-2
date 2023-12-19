@@ -1,0 +1,16 @@
+name: build_host
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - packages/home_camper_host/**
+jobs:
+  drive:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      # - run: flutter build ios packages/home_camper_traveler/lib/main.dart

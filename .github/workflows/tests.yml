@@ -1,0 +1,16 @@
+name: run_tests
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  drive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter test packages/home_camper_host/test
+      - run: flutter test packages/home_camper_traveler/test
+      - run: flutter test packages/home_camper_types/test
+      - run: flutter test packages/home_camper_core/test

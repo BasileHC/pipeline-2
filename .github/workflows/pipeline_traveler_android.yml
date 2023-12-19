@@ -1,0 +1,45 @@
+name: build_traveler
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - packages/home_camper_traveler/**
+jobs:
+  drive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Set up key.properties
+        run: |
+          echo "keyPassword=${{ secrets.KEY_PASSWORD_TRAVELER }}" > packages/home_camper_traveler/android/key.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD_TRAVELER }}" >> packages/home_camper_traveler/android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS_TRAVELER }}" >> packages/home_camper_traveler/android/key.properties
+          echo "${{ secrets.STORE_FILE_CONTENTS_TRAVELER }}" | base64 --decode > packages/home_camper_traveler/android/key.jks
+
+      - name: Set up local.properties
+        run: |
+          echo "flutter.sdk=$FLUTTER_ROOT" > android/local.properties
+
+      - name: Set up Play Store Secret
+        run: |
+          echo "${{ secrets.PLAY_STORE_SECRET }}" | base64 --decode > android/play_store_secret.json
+
+      - name: Setup Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          rubygems: latest
+
+      - name: Build and Deploy
+        run: |
+          flutter pub get
+          cd packages/home_camper_traveler/android && bundle install && bundle exec fastlane deploy-closed

@@ -1,0 +1,15 @@
+name: run-golden-tests
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  drive:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter test packages/home_camper_host/test_golden
+      - run: flutter test packages/home_camper_traveler/test_golden
+      - run: flutter test packages/home_camper_gallery/test_golden

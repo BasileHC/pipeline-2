@@ -1,0 +1,104 @@
+
+{ 
+	"version": "2.0.0",
+	"tasks": [
+    { // build gallery
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_gallery"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get gallery"
+    },
+    {  // build host
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_host"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get host"
+    },
+    {  // build traveler
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_traveler"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get traveler"
+    },
+    {  // build types
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_types"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get types"
+    },
+    {  // build core
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_core"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get core"
+    },
+    {  // build api
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_api"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get api"
+    },
+    {  // build cache
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get",
+        "--directory packages/home_camper_cache"
+      ],
+      "problemMatcher": [],
+      "label": "Flutter: flutter pub get cache"
+    },
+    {
+      "label": "Flutter: flutter pub get all",
+      "dependsOn":["Flutter: flutter pub get host", "Flutter: flutter pub get gallery", "Flutter: flutter pub get traveler", 
+      "Flutter: flutter pub get core", "Flutter: flutter pub get types", "Flutter: flutter pub get api", "Flutter: flutter pub get cache"]
+    },
+    {
+      "label": "Flutter: Goldens",
+      "dependsOn":["Flutter: Test Goldens", "Flutter: Generate Junit Report"]
+    },
+    { // flutter test --update-goldens --machine | tojunit -o reports\test\test.xml
+      "type": "flutter",
+      "command": "flutter",
+      "args": [
+        "test",
+        "--update-goldens",
+        "--machine | tojunit",
+        "-o reports/test/test.xml"
+      ],
+      "problemMatcher":[],
+      "label": "Flutter: Test Goldens"
+    },
+  ]
+}

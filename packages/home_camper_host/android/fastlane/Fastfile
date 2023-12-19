@@ -1,0 +1,54 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+  desc "Deploy a new version to Google Play Closed Testing"
+  lane :deploy_closed do
+    sh("flutter build appbundle --release --dart-define-from-file config-release.json")
+
+    supply(
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      track: 'alpha',
+      release_status: 'draft',
+    )
+  end
+
+  desc "Deploy a new version to Google Play Internal Testing"
+  lane :deploy_internal do
+    sh("flutter build appbundle --release --dart-define-from-file config-debug.json")
+
+    supply(
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      track: 'internal',
+      release_status: 'draft',
+    )
+  end
+
+  desc "Increments Version code"
+  lane :increment_version do
+    path = '../app/build.gradle'
+    vc = /versionCode\s+(\d+)/ 
+
+    # Reading build.gradle file to get versionName and versionCode
+    gradleFile = File.read(path)
+    versionCode = gradleFile[vc, 1].to_i
+    gradleFile[vc, 1] = (versionCode + 1).to_s
+
+    newGradleFile = File.new(path, 'w')
+    newGradleFile.write(gradleFile)
+    newGradleFile.close
+  end
+

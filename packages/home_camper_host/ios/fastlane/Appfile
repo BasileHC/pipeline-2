@@ -1,0 +1,8 @@
+app_identifier("com.homecamper.host.dev") # The bundle identifier of your app
+apple_id("basile@homecamper.com") # Your Apple Developer Portal username
+
+itc_team_id("126791759") # App Store Connect Team ID
+team_id("S63MM9RF9F") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

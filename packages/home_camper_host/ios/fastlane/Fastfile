@@ -1,0 +1,98 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  # lane :beta do
+  #   # increment_build_number(xcodeproj: "Runner.xcodeproj")
+
+  #   create_keychain(
+  #     name: ENV['MATCH_KEYCHAIN_NAME'],
+  #     password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+  #     default_keychain: true,
+  #     unlock: true,
+  #     timeout: 3600,
+  #     lock_when_sleeps: false
+  #   )
+
+  #   match(
+  #     type: "appstore",
+  #     readonly: is_ci,
+  #     keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
+  #     keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"]
+  #   )
+
+  #   sh "flutter build ios --release --no-codesign"
+  #   build_app(
+  #     workspace: "Runner.xcworkspace",
+  #     scheme: "Runner",
+  #     xcargs: "-allowProvisioningUpdates",
+  #     output_directory: "../build/ios"
+  #   )
+
+
+  #   # build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+  #   # upload_to_testflight(skip_waiting_for_build_processing: true,)
+  # end
+  lane :beta do
+    create_keychain(
+      name: ENV['MATCH_KEYCHAIN_NAME'],
+      password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: false
+    )
+    match(
+      type: "appstore",
+      keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
+      keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"]
+    )
+
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      archive_path: "../build/ios/Runner.xcarchive",
+      output_directory: "../build/ios/Runner",
+    )
+
+    upload_to_testflight(
+      ipa: '../build/ios/Runner/Runner.ipa',
+      skip_waiting_for_build_processing: true,
+    )
+    # sh "flutter build ios --release --no-codesign"
+    # build_app(
+    #   workspace: "Runner.xcworkspace",
+    #   scheme: "Runner",
+    #   xcargs: "-allowProvisioningUpdates",
+    #   output_directory: "../build/ios"
+    # )
+      # api_key = app_store_connect_api_key(
+      #   key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+      #   issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      #   key_content: ENV["APP_STORE_CONNECT_API_KEY_CONTENT"],
+      #   duration: 1200, # optional, in seconds, default: 1200 (20 min)
+      #   in_house: false, # optional, if true, will use the App Store Connect API instead of App Store Connect API for downloading profiles
+      #   verbose: true # optional, print out the request headers
+      # )
+      # upload_to_testflight(skip_waiting_for_build_processing: true, api_key: api_key, expire_previous_builds: true)
+      # upload_to_testflight(skip_waiting_for_build_processing: true, expire_previous_builds: true)
+    # else
+      # upload_to_testflight(skip_waiting_for_build_processing: true, expire_previous_builds: true)
+    # end
+  end
+end
